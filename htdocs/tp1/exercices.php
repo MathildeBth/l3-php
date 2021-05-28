@@ -6,7 +6,7 @@
 $note_maths = 15;
 $note_francais = 12;
 $note_histoire_geo = 9;
-$moyenne = 0;
+$moyenne = ($note_maths + $note_francais + $note_histoire_geo) / 3;
 echo 'La moyenne est de '.$moyenne.' / 20.';
 
 
@@ -16,7 +16,7 @@ echo 'La moyenne est de '.$moyenne.' / 20.';
  */
 $prix_ht = 50;
 $tva = 20;
-$prix_ttc = 0;
+$prix_ttc = $prix_ht + $prix_ht * ($tva/100);
 echo 'Le prix TTC du produit est de ' . $prix_ttc . ' €.';
 
 
@@ -25,7 +25,8 @@ echo 'Le prix TTC du produit est de ' . $prix_ttc . ' €.';
  * Déclarer une variable $test qui contient la valeur 42. En utilisant la fonction var_dump(),
  * faire en sorte que le type de la variable $test soit string et que la valeur soit bien de 42.
 */
-
+$test = '42';
+var_dump($test);
 
 
 /**
@@ -33,21 +34,42 @@ echo 'Le prix TTC du produit est de ' . $prix_ttc . ' €.';
  * Déclarer une variable $sexe qui contient une chaîne de caractères.
  * Créer une condition qui affiche un message différent en fonction de la valeur de la variable.
  */
+$sexe = 'F';
+if ($sexe = 'F') {
+    echo "La personne est une femme";
+} else {
+    echo "La personne est un homme";
+}
 
-
+echo "<br>";
 
 /**
  * 5.
  * Déclarer une variable $heure qui contient la valeur de type integer de votre choix comprise entre 0 et 24.
  * Créer une condition qui affiche un message si l'heure est le matin, l'après-midi ou la nuit.
  */
+$heure = 3;
+if ($heure>12) {
+    echo "Après-midi";
+}
+elseif ($heure>7) {
+    echo "Matin";
+}
+else {
+    echo "Nuit";
+}
 
+echo "<br>";
 
 /**
  * 6.
  * En utilisant la boucle for, afficher la table de multiplication du chiffre 5.
  */
+for ($i = 0; $i <= 9; $i++) {
+    echo $i * 5 . "<br/>";
+}
 
+echo "<br>";
 
 /**
  * 7.
@@ -57,7 +79,20 @@ echo 'Le prix TTC du produit est de ' . $prix_ttc . ' €.';
  *     . incrémenter sa valeur de 2 ;
  * Si la valeur de la variable est égale à 10, la mettre en valeur avec la balise HTML appropriée.
  */
+$variable = 0;
 
+while ($variable <= 20){
+    if ($variable == 10){
+        echo '<b>' .$variable. '</b>';
+        echo " ";
+    }else {
+        echo $variable;
+        echo " ";
+    }
+    $variable = $variable + 2;
+}
+
+echo "<br>";
 
 /**
  * 8.
@@ -69,7 +104,12 @@ echo 'Le prix TTC du produit est de ' . $prix_ttc . ' €.';
  *
  * Afficher les valeurs de tous les éléments du tableau en utilisant la boucle foreach.
  */
+$array = array('France : Paris', 'Allemagne : Berlin', 'Italie : Rome');
+foreach ($array as $a){
+    echo $a. "<br>";
+}
 
+echo "<br>";
 
 /**
  * 9.
@@ -86,9 +126,17 @@ $pays_population = array(
     'Allemagne' => 82800000,
 );
 
+foreach ($pays_population as $pa => $po) {
+    if($po >= 20000000)  {
+        echo $pa . "<br/>";
+    }
+}
+
+echo "<br>";
+
 /**
  * 10.
- * En utilisant le tableau ci-dessous afficher la prase suivante pour chaque pays:
+ * En utilisant le tableau ci-dessous afficher la phrase suivante pour chaque pays:
  *  #PAYS# : il y à #NOMBRE_HABITANT# d'habitants
  *
  * utiliser les functions de tableau exemple : array_map()
@@ -103,6 +151,12 @@ $pays_population = array(
     'Allemagne' => 82800000,
 );
 
+function pays_habitant($keys, $values) {
+    return $keys . " il y a " . $values . " d'habitants";
+}
+$map = array_map("pays_habitant", array_keys($pays_population), $pays_population);
+var_dump($map);
+
 /**
  * 11.
  * En utilisant le tableau de keys ci-dessous, reordonner le pour le ranger par taille de longueur de chaine de caractere
@@ -114,6 +168,15 @@ $keys = array(
     "p8333335p",
     "x24p"
 );
+
+function usort_trier($a,$b){
+    return strlen($a)-strlen($b);
+}
+
+usort($keys,'usort_trier');
+var_dump($keys);
+
+echo "<br>";
 
 /* résultat une fois ordonné :
 array(4) {
