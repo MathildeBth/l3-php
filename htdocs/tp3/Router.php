@@ -9,6 +9,7 @@ class Router
     public function __construct()
     {
         $this->uri = (isset($_SERVER['REQUEST_URI']))? $_SERVER['REQUEST_URI'] : "/";
+        //var_dump($this->uri);
     }
 
     function process()

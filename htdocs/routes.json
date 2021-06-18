@@ -1,17 +1,17 @@
 {
 
   "home" : {
-    "path" : "/",
+    "path" : "/l3-php/htdocs/",
     "controller" : "App\\Controller\\HomeController@home"
   },
 
   "catalog" : {
-    "path" : "/catalog",
+    "path" : "/l3-php/htdocs/catalog",
     "controller" : "App\\Controller\\CatalogController@view"
   },
 
   "catalog_product" : {
-    "path" : "/catalog/product",
+    "path" : "/l3-php/htdocs/catalog/product",
     "controller" : "App\\Controller\\CatalogController@viewProduct"
   },
 

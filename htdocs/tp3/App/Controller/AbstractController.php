@@ -9,7 +9,7 @@ abstract class AbstractController
     function render(string $template, array $args = []): void
     {
         $this->data = $args;
-        include BASE_DIR . self::TEMPLATE_PATH . $template;
+        include __DIR__ . self::TEMPLATE_PATH . $template;
     }
 
     function getData(string $key)
