@@ -1,9 +1,13 @@
 <?php
+
 namespace App\Controller;
 
-class HomeController
+class HomeController extends AbstractController
 {
-    public function __construct()
+
+    public function home()
     {
+        echo $this->render('home.phtml', []);
     }
+
 }

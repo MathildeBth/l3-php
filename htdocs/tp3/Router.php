@@ -3,30 +3,48 @@
 
 class Router
 {
+    private $controller = null;
+    private $method = null;
+
+    public function __construct()
+    {
+        $this->uri = (isset($_SERVER['REQUEST_URI']))? $_SERVER['REQUEST_URI'] : "/";
+    }
 
     function process()
     {
-        $uri_ = $_SERVER["REQUEST_URI"];
+        if(!$this->exist()){
+            $this->setRouteControllerByName("notFound");
+        }
+        return (new $this->controller())->{$this->method}();
+    }
 
-        $file = file_get_contents('routes.json');
-        $json = json_decode($file);
+    private function getRoutesConfig() : array
+    {
+        $routesJson = file_get_contents("routes.json");
+        return json_decode($routesJson, true);
+    }
 
-        $new = "";
-        foreach ($json as $value) {
-            if($uri_ == $value->{"path"}) {
-                $new = $value;
+    private function exist() : bool
+    {
+        foreach ($this->getRoutesConfig() as $route){
+            if(isset($route['path']) && $route['path'] === $this->uri){
+                $configController = explode('@',$route['controller']);
+                $this->controller = $configController[0];
+                $this->method = $configController[1];
+                return true;
             }
         }
+        return false;
+    }
 
-        if($new != NULL){
-            $control = $new->{"controller"};
-            $array = explode("@", $control);
-            $x = 'app\Controller\\' . $array[0];
-            $y = new $x;
-            $z = strval($array[1]);
-            echo $y->$z();
-        }else{
-            echo "Erreur 404";
+    private function setRouteControllerByName(string $name) : void
+    {
+        $routesJson = json_decode(file_get_contents("routes.json"), true);
+        if(isset($routesJson[$name])){
+            $configController = explode('@',$routesJson[$name]['controller']);
+            $this->controller = $configController[0];
+            $this->method = $configController[1];
         }
 
     }
