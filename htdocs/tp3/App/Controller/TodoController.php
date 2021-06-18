@@ -9,8 +9,12 @@ class TodoController extends AbstractController
 
     public function home() {
         $client = new Client();
-        $res = $client->get("https://jsonplaceholder.typicode.com/todos");
-        $json = json_decode($res->getBody()->getContents(), true);
+
+        $reponse = $client->get("https://jsonplaceholder.typicode.com/todos");
+        if ($reponse->getStatusCode() !== 200) {
+            throw new \Exception("Impossible de joindre l'api");
+        }
+        $json = json_decode($reponse->getBody()->getContents(), true);
         $this->render('catalogues/values.phtml', ['guzzle' => $json]);
     }
 
